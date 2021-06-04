@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>图书列表</title>
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+</head>
+<body>
+<div id="content"></div>
+</body>
+</html>
+
+<script>
+        $.get("/APP2/info",function (data){
+                console.log(data)
+                for (book in data){
+                    $("#content").append("<p>"+data[book].bookname+"</p>")
+                }
+
+        })
+</script>

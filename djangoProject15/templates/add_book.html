@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+
+
+{% block nav %}
+    <li ><a href="/app01/publisher_list/">出版社列表页</a></li>
+    <li><a href="/app01/book_list/">图书列表页</a></li>
+    <li class="active"><a href="/app01/author_list/">作者列表</a></li>
+{% endblock %}
+
+{% block bar %}
+    <div class="col-md-9" style=  "justify-content: flex-end;">
+            <h1 class="page-header">图书管理页面</h1>
+        <div class="panel panel-primary">
+                <!-- Default panel contents -->
+        <div class="panel-heading">修改图书<i class="fa fa-thumb-tack pull-right"></i></div>
+            <div class="col-md-2 pull-right">
+                            <a class="btn btn-success" href="{% url "APP1:listbook" %}">查看图书列表</a>
+                        </div>
+            <div  class="panel-body">
+                 <form action="#"  method="post">
+                     {% csrf_token %}
+                    <p>图书名称:<input  type="text" name="bookname" value="{{ books.bookname }}" ></p>
+                    <p>作者:<input  type="text"  name="bookauthor" value="{{ books.bookauthor }}"></p>
+                    <p>价格:<input type="text" name="bookprice" value="{{ books.bookprice }}"></p>
+                    <p>出版社:<input type="text" name="bookpublic" value="{{ books.bookpublic }}"></p>
+                     <p><input type="hidden" name="id" value="{{ books.id }}"></p>
+                    <p><input type="submit" value="提交" ></p>
+                     <p>{{ tite }}</p>
+                </form>
+            </div>
+      </div>
+{% endblock %}
+
+
+{% block main %}
+
+
+
+{% endblock %}

@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+
+{% block nav %}
+    <li ><a href="/app01/publisher_list/">出版社列表页</a></li>
+    <li><a href="/app01/book_list/">图书列表页</a></li>
+    <li class="active"><a href="/app01/author_list/">作者列表</a></li>
+{% endblock %}
+
+
+{% block bar %}
+      <div class="col-md-9" style=  "justify-content: flex-end;">
+            <h1 class="page-header">出版社管理页面</h1>
+        <div class="panel panel-primary">
+                <!-- Default panel contents -->
+        <div class="panel-heading">添加出版社<i class="fa fa-thumb-tack pull-right"></i></div>
+            <div  class="panel-body">
+                         <form action="{% url  "APP1:addpublic" %} "  method="post">
+                                        <p>出版社名称:<input type="text" name="publicname"></p>
+                                        <p>出版社地址:<input type="text" name="publicsite"></p>
+                                        <p><input type="submit" value="提交" ></p>
+                                    </form>
+            </div>
+      </div>
+{% endblock %}
+
+
+
+{% block main %}
+ 
+ 
+ 
+
+{% endblock %}

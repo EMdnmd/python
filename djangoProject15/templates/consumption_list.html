@@ -1,0 +1,47 @@
+{% extends "author_list.html" %}
+
+{% block title %}
+    {{ title }}的书架
+{% endblock %}
+{% block bt %}
+            <th scope="col">序号</th>
+            <th scope="col">图书</th>
+            <th scope="col">价格</th>
+{% endblock %}
+
+
+{% block bs %}
+            {% for foo in item.object_list %}
+                    <tr>
+                         <th scope="row">{{ foo.di }}</th>
+                        <td>{{ foo.book.bookname }}</td>
+                        <td>{{ foo.book.bookprice }}</td>
+                    </tr>
+            {% endfor %}
+{% endblock %}
+{% block pages %}
+     {% for book in  item.paginator.page_range %}
+           <a href="{% url "APP1:listsheet" pall=pages fall=book   %}"> {{book}}</a>
+     {% endfor %}
+{% endblock %}
+
+{% block sa %}
+
+    {% if paginator.num_pages < 1 %}
+             {% url "APP1:listsheet" pall=pages  fall=item.previous_page_number %}
+    {% elif page_obj.has_other_pages%}
+           {% url "APP1:listsheet"  pall=pages   fall=2 %}
+        {% endif %}
+{% endblock %}
+{% block la%}
+     {% if page_obj.has_next%}
+         {%  url "APP1:listsheet"  pall=pages  fall=item.next_page_number %}
+       {% else %}
+               {% url "APP1:listsheet" pall=pages    fall=1 %}
+        {% endif %}
+{% endblock %}
+{% block main %}
+   <!--这是表格-->
+
+
+{% endblock %}

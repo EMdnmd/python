@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+
+
+
+{% block nav %}
+    <li ><a href="#">出版社列表页</a></li>
+    <li><a href="#">图书列表页</a></li>
+    <li class="active"><a href="#">作者列表</a></li>
+{% endblock %}
+
+{% block bar %}
+     <div class="col-md-9" style=  "justify-content: flex-end;">
+            <h1 class="page-header">图书管理页面</h1>
+            <div class="panel panel-primary">
+                <!-- Default panel contents -->
+                <div class="panel-heading">图书列表 <i class="fa fa-thumb-tack pull-right"></i></div>
+                <div class="panel-body">
+                    <div class="row" style="margin-bottom: 15px">
+                        <div class="col-md-4">
+                            <div class="input-group">
+                                <input type="text" class="form-control" placeholder="Search for...">
+                                <span class="input-group-btn">
+                                    <button class="btn btn-default" type="button">搜索</button>
+                                </span>
+                            </div><!-- /input-group -->
+                        </div><!-- /.col-md-4 -->
+                        <div class="col-md-2 pull-right">
+                            <a class="btn btn-success" href="{% url "APP1:addbook" %}">新增图书</a>
+                        </div>
+                           <div>
+                          <table class="table table-dark">
+                              <thead>
+                                <tr>
+                                    <th scope="col">序号</th>
+                                    <th scope="col">图书名</th>
+                                    <th scope="col">作者</th>
+                                    <th scope="col">价格</th>
+                                    <th scope="col">出版社</th>
+                                    <th scope="col">图书添加时间</th>
+                                    <th scope="col">操作</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                  {% for foo  in  books%}
+                                             <tr>
+                                                 <th scope="row">{{ foo.id }}</th>
+                                                <td>{{ foo.bookname }}</td>
+                                                <td>{{ foo.bookauthor }}</td>
+                                                 <td>{{ foo.bookprice }}</td>
+                                                <td>{{ foo.bookpublic }}</td>
+                                                 <td>{{ foo.bookaddtime }}</td>
+                                                 <td><a href="{% url "APP1:dle" pull=foo.id %}">删除</a><a href="{% url "APP1:upbook" pall=foo.id %}">修改</a></td>
+                                            </tr>
+                                  {% endfor %}
+                              </tbody>
+                            </table>
+                      </div>
+                </div>
+                </div>
+    {% endblock %}
+
+{##}
+{% block pages %}
+     {% for book in paginator.page_range %}
+           <a href="{% url "APP1:listbook" fall=book %}"> {{book}}</a>
+     {% endfor %}
+{% endblock %}
+
+{% block sa %}
+    {% if paginator.num_pages < 1 %}
+             {% url "APP1:listbook" fall=page_obj.previous_page_number %}
+    {% elif page_obj.has_other_pages%}
+           {% url "APP1:listbook" fall=1 %}
+        {% endif %}
+{% endblock %}
+{% block la%}
+     {% if page_obj.has_next%}
+         {%  url "APP1:listbook" fall=page_obj.next_page_number %}
+       {% else %}
+               {% url "APP1:listbook" fall=1 %}
+        {% endif %}
+{% endblock %}
+{#{% block script %}#}
+{#        <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.js"></script>#}
+{#        <script>#}
+{#        $.ajax({#}
+{#            type:"put",#}
+{#            url:"{% url " a"%}"#}
+{#        })#}
+{#        </script>#}
+{#{% endblock %}#}
+{% block main %}
+<!--这是表格-->
+
+{% endblock %}
