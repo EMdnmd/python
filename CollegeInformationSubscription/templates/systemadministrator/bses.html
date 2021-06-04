@@ -1,0 +1,75 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <meta name="description" content=""/>
+    <meta name="author" content=""/>
+    <title>Rukada - Responsive Bootstrap4 Admin Dashboard Template</title>
+    <!--favicon-->
+    <link rel="icon" href="{% static '/assets/images/favicon.ico' %}" type="image/x-icon">
+    <!-- simplebar CSS-->
+    <link href={% static  "/assets/plugins/simplebar/css/simplebar.css" %} rel="stylesheet"/>
+    <!-- Bootstrap core CSS-->
+    <link href={% static '/assets/css/bootstrap.min.css' %} rel="stylesheet"/>
+    <!-- animate CSS-->
+    <link href={% static "/assets/css/animate.css" %} rel="stylesheet" type="text/css"/>
+    <!-- Icons CSS-->
+    <link href={% static "/assets/css/icons.css" %} rel="stylesheet" type="text/css"/>
+    <!-- Sidebar CSS-->
+    <link href="{% static "/assets/css/sidebar-menu.css" %}" rel="stylesheet"/>
+    <!-- Custom Style-->
+    <link href={% static "/assets/css/app-style.css" %} rel="stylesheet"/>
+
+</head>
+<body  {% block bj %}
+
+{% endblock %}>
+{% block wrapper %}
+
+
+
+{% endblock %}
+<!-- Bootstrap core JavaScript-->
+<script src={% static '/assets/js/jquery.min.js' %}></script>
+<script src={% static '/assets/js/popper.min.js' %}></script>
+<script src={% static "/assets/js/bootstrap.min.js" %}></script>
+<!-- simplebar js -->
+<script src={% static "/assets/plugins/simplebar/js/simplebar.js" %}></script>
+<!-- waves effect js -->
+<script src={% static "/assets/js/waves.js" %}></script>
+<!-- sidebar-menu js -->
+{#  <script src={%static "assets/js/sidebar-menu.js"%}></script>#}
+<!-- Custom scripts -->
+{#  <script src={% static "assets/js/app-script.js" %}></script>#}
+
+{% block script %}
+    <script>
+        var deletes = document.getElementsByClassName("dle")
+        for (let i = 0; i < deletes.length; i++) {
+            deletes[i].onclick = function () {
+                s = this.attributes["title"].nodeValue
+                var xhr = new XMLHttpRequest()
+                xhr.open("get", s)
+                xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset-UTF-8');
+                xhr.send()
+                xhr.onreadystatechange = function () {
+                    console.log("进来了")
+                    if (xhr.readyState === 4) {
+                        if (xhr.status >= 200 && xhr.status < 300) {
+                            alert(xhr.response)
+                            window.location.reload()
+                        }
+                    }
+                }
+            }
+        }
+        {% block  scs %}
+        {% endblock %}
+    </script>
+{% endblock %}
+
+</body>
+</html>

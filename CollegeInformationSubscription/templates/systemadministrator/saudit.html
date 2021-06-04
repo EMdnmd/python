@@ -1,0 +1,138 @@
+{% extends "systemadministrator/bses.html" %}
+{% block wrapper %}
+    <div class="col-lg-10">
+        <hr>
+        <table class="table table-primary table-striped shadow-primary">
+            <thead>
+            <tr>
+                <th scope="col">资料名</th>
+                <th scope="col">资料图片</th>
+                <th scope="col">资料简介</th>
+                <th scope="col">QQ号</th>
+                <th scope="col">资料作者</th>
+                <th scope="col">上传资料账户</th>
+                <th scope="col">查看资料</th>
+                <th scope="col">资料审核</th>
+                <th scope="col">删除</th>
+                <th scope="col">编辑</th>
+            </thead>
+            <tbody>
+            {% for foo in ad %}
+                <tr>
+                    <th>{{ foo.dataname }}</th>
+                    <td>{{ foo.dataimgurl }}</td>
+                    <td>{{ foo.dataintroduce }}</td>
+                    <td>{{ foo.qqnumber }}</td>
+                    <td>{{ foo.dataauthor }}</td>
+                    <td>{{ foo.dataregister.account }}</td>
+                     <td> <a  style="color: #0b2e13" href="{% url "Administrator:xkzl" %}?id={{ foo.id }}"> 查看资料</a></td>
+                    <td>{% ifequal foo.datasaudit  1 %}
+                        审核成功
+                    {% else %}
+                        未审核
+                    {% endifequal %}
+                    </td>
+                    <td><a class="show-code dle" href="javascript:;"
+                           title="{% url "Administrator:deletsaud" %}?id={{ foo.id }}"><i
+                            class="icon-trash icons"></i><span
+                            class="name">删除</span> <code class="code-preview" style="display: none;">.icon-trash</code></a>
+                    </td>
+                    <td>{% ifequal foo.datasaudit  1 %}
+                        <a class="show-code bj" id="bj" href="javascript:;"
+                           title="{% url "Administrator:upsaut" %}?id={{ foo.id }}"><i
+                                class="icon-pencil  icons"></i><span
+                                class="name">撤销审核</span> <code class="code-preview"
+                                                               style="display: none;">.icon-pencil</code></a>
+
+                    {% else %}
+                        <a class="show-code bj" id="bj" href="javascript:;"
+                           title="{% url "Administrator:upsaut" %}?id={{ foo.id }}"><i
+                                class="icon-pencil icons"></i><span
+                                class="name">审核</span> <code class="code-preview"
+                                                             style="display: none;">.icon-pencil</code></a>
+                    {% endifequal %}
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        <div class="col-sm-12 col-md-7">
+            <div class="dataTables_paginate paging_simple_numbers"
+                 id="default-datatable_paginate">
+                <ul class="pagination">
+
+
+                    {% if ad.has_previous %}
+                        <li class="paginate_button page-item previous "
+                            id="default-datatable_previous">
+                            <a href="{% url "Administrator:saut" %}?id={{ ad.previous_page_number }}"
+                               aria-controls="default-datatable"
+                               data-dt-idx="0" tabindex="0"
+                               class="page-link">Previous</a></li>
+
+
+                    {% else %}
+                        <li class="paginate_button page-item previous disabled"
+                            id="default-datatable_previous">
+                            <a href=""
+                               aria-controls="default-datatable"
+                               data-dt-idx="0" tabindex="0"
+                               class="page-link">Previous</a>
+                        </li>
+                    {% endif %}
+
+
+
+                    {% for foo in ad.paginator.page_range %}
+                        <li class="paginate_button page-item active"><a
+                                href="{% url "Administrator:saut" %}?id={{ foo }}"
+                                aria-controls="default-datatable"
+                                data-dt-idx="1"
+                                tabindex="0"
+                                class="page-link">{{ foo }}</a>
+                        </li>
+                    {% endfor %}
+
+                    {% if ad.has_next %}
+
+                        <li class="paginate_button page-item next"
+                            id="default-datatable_next"><a
+                                href="{% url "Administrator:saut" %}?id={{ ad.next_page_number }}"
+                                aria-controls="default-datatable"
+                                data-dt-idx="7" tabindex="0"
+                                class="page-link">Next</a></li>
+                    {% else %}
+                        <li class="paginate_button page-item next disabled"
+                            id="default-datatable_next"><a href="#"
+                                                           aria-controls="default-datatable"
+                                                           data-dt-idx="7" tabindex="0"
+                                                           class="page-link">Next</a></li>
+                    {% endif %}
+
+
+                </ul>
+            </div>
+        </div>
+
+    </div>
+{% endblock %}
+{% block scs %}
+    var bj = document.getElementsByClassName("bj")
+    for (let i = 0; i < bj.length; i++) {
+    bj[i].onclick = function () {
+    s = this.attributes["title"].nodeValue
+    var xhr = new XMLHttpRequest()
+    xhr.open("get", s)
+    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset-UTF-8');
+    xhr.send()
+    xhr.onreadystatechange = function () {
+    if (xhr.readyState === 4) {
+    if (xhr.status >= 200 && xhr.status < 300) {
+    alert(xhr.response)
+    window.location.reload()
+    }
+    }
+    }
+    }
+    }
+{% endblock %}

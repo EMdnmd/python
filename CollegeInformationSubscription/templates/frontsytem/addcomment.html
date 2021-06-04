@@ -1,0 +1,45 @@
+{% extends "frontsytem/base.html" %}
+{% load static %}
+
+
+{% block body %}
+
+
+    <div class="layui-card" style="margin-top: 30px">
+        <div class="layui-card-header" style="font-size: 23px">书籍评论添加</div>
+        <div class="layui-card-body">
+          <hr class="layui-bg-red">
+        </div>
+    </div>
+
+  <fieldset class="layui-elem-field">
+        <legend>感谢您发出心声</legend>
+        <div class="layui-field-box">
+      <div>
+
+        <form method="post" action="/APP2/addcomment/" enctype="multipart/form-data">
+
+            <input type="hidden" name="register_id" value="{{ regster_id }}">
+
+            <input type="hidden" name="book_id" value="{{ book_id }}">
+
+            <div class="layui-card" style="margin-top: 60px; margin-bottom: 60px">
+            <div class="layui-card-body layui-row layui-col-space10">
+              <div class="layui-col-md12">
+                <textarea name="comment" placeholder="请输入评论内容" class="layui-textarea" style="font-size:16px; "></textarea>
+              </div>
+            </div>
+          </div>
+
+            <div style="margin-left: 50%">
+                <input type="submit" value="发表评论" class="layui-btn layui-btn-warm layui-btn-radius" style="width: 200px; height: 50px;margin-bottom: 30px">
+            </div>
+
+
+        </form>
+    </div>
+        </div>
+  </fieldset>
+
+
+{% endblock %}

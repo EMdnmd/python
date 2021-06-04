@@ -1,0 +1,40 @@
+{% extends "systemadministrator/base.html" %}
+{% block title %}添加学校{% endblock %}
+{% block body %}
+    <body>
+    <div class="layui-fluid" style="width: 100%;margin: 0 auto">
+        <form method="post"  action="{% url "Administrator:upschool"  id=SchoolDatas.id%}">
+               <div class="layui-card">
+            <div class="layui-card-header">修改学校信息</div>
+            <div class="layui-card-body" style="padding: 15px;">
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">学校</label>
+                        <div class="layui-input-inline">
+                            <input id="xx" type="text" title="学校" name="college" value="{{ SchoolDatas.college }}"
+                                   autocomplete="off"
+                                   class="layui-input">
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">学院</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="specialty" title="学院" id="xy" value="{{ SchoolDatas.specialty }}"
+                               autocomplete="off"
+                               class="layui-input">
+                    </div>
+                </div>
+                &nbsp&nbsp &nbsp &nbsp &nbsp&nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp
+                &nbsp &nbsp &nbsp &nbsp
+                <input  type="hidden" value="{{ SchoolDatas.id }}" name="id">
+                <button class="layui-btn" lay-submit="" id="button" lay-filter="component-form-demo1">立即提交
+                </button>
+
+            </div>
+        </div>
+        </form>
+    </div>
+    </body>
+{% endblock %}
+{% block script %}{% endblock %}

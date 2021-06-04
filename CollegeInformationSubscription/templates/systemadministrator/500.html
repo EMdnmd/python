@@ -1,0 +1,31 @@
+{% extends "systemadministrator/bses.html" %}
+{% block bj %}
+        class="gradient-deepblue"
+{% endblock %}
+{% block wrapper %}
+    <div id="wrapper">
+
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="text-center error-pages">
+                        <h1 class="error-title text-white"> 500</h1>
+                        <h2 class="error-sub-title text-white">服务器出现异常</h2>
+
+                        <p class="error-message text-white text-uppercase">过段时间再试</p>
+                        <div class="mt-4">
+                            <a href="/" class="btn btn-secondary btn-round shadow-secondary m-1">返回首页</a>
+                        </div>
+
+                        <div class="mt-4">
+                            <p class="text-white">Copyright © 2018 Rukada | All rights reserved.</p>
+                        </div>
+                        <hr class="w-50 border-light-2">
+                        <div class="mt-2">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

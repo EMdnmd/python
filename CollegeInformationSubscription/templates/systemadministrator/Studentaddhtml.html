@@ -1,0 +1,40 @@
+{% extends "systemadministrator/base.html" %}
+{% block body %}
+    <body class="layui-body-content">
+    <div style="width: 100% ; text-align: center">
+        <div class="layui-fluid" style="width: 100% ; text-align: center">
+            <div class="layui-row layui-col-space15">
+                <div class="layui-col-md6">
+                    <div class="layui-card">
+                        <div class="layui-card-header">学生账号添加</div>
+                        <FORM method="post" action="{% url "Administrator:studentsadd" %}">
+                            <div class="layui-card-body layui-row layui-col-space10">
+
+                                <div class="layui-col-md6">
+                                    <input type="text" name="user" placeholder="请输入8位数学号" autocomplete="off"
+                                           class="layui-input">
+                                </div>
+                                <div class="layui-col-md6">
+                                    <input type="text" name="username" placeholder="请输入姓名" autocomplete="off"
+                                           class="layui-input">
+                                </div>
+                                <div class="layui-col-md6">
+                                    <input type="password" name="password" placeholder="请输入密码" autocomplete="off"
+                                           class="layui-input">
+                                </div>
+                                <div class="layui-col-md6">
+                                    <input type="password" name="passwords" placeholder="请确认密码" autocomplete="off"
+                                           class="layui-input">
+                                </div>
+                            </div>
+                                {{ error }}
+                            <DIV>
+                                    <button class="layui-btn layui-btn-xs">提交</button>
+                            </DIV>
+                        </FORM>
+                    </div>
+                </div>
+            </div>
+    </body>
+    </div>
+{% endblock %}

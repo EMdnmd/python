@@ -1,0 +1,133 @@
+{% extends "frontsytem/base.html" %}
+{% load static %}
+
+
+{% block body %}
+    <div class="goods_type">
+        <div class="goods_box">
+            <div class="box_pic"><img src="/static/book/{{ book_list.bookimgurl }}"/></div>
+            <div class="box_details">
+
+
+                    <span style='font-size: 15px;'></span>
+
+                    <div class="box_bg">
+                        <span class="price_span"> 书籍名称:</span>
+                        <span class="price_span">{{ book_list.bookname }}</span>
+                    </div>
+                    <div class="address">作者: {{ book_list.bookauthor }}</div>
+                    <div class="address" style="color: #ba0448">价格: ￥{{ book_list.bookprice }}</div>
+                    <div class="address" style="border: 1px solid #f3eee0; height: 364px; width: 807px; line-height: 50px">简介: {{ book_list.bookbrief }}</div>
+
+
+            </div>
+
+        </div>
+    </div>
+
+    <div class="goods_type1">
+
+        <div class="goods_pl_div" id="goods_pl_id">
+            <div class="type1_bottom">
+
+                <div class="goods_details_div">
+                    <button class="type1_top" onclick="xqFun()">商品详情</button>
+                </div>
+
+                <div class="goods_details_div">
+                    <button class="type1_top" onclick="plFun()">商品评论</button>
+                </div>
+
+
+
+                <div>
+                    <div id="removepl">
+                        <div class="types_div">
+                            <div class="type1_bottom">
+                                <img src="/static/book/{{ book_list.bookimgurl }}"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        </div>
+    </div>
+
+
+    </div>
+    <script>
+
+        // 详情
+        function xqFun() {
+            $("#removepl").empty();
+
+            function shop_dom() {
+                var xq_div1 = $("<div></div>").addClass("types_div");
+                $("#removepl").append(xq_div1);
+
+                var xq_div2 = $("<div></div>").addClass("type1_bottom");
+                xq_div1.append(xq_div2);
+
+                var xq_img = $("<img/>").attr('src', '/static/bigbook/{{ book_list.bookimgbig }}');
+                xq_div2.append(xq_img)
+
+            }
+            shop_dom()
+
+
+        }
+
+        // 评论
+        function plFun() {
+            $.ajax(
+                {
+                    url: "/APP2/details/?pl=1&book_id={{ book_list.id }}",
+                    type: "GET",
+                    dataType: "json",
+                    success: function (data) {
+                        $("#removepl").empty();
+
+                        let datas = data["book_comment"]
+
+                        for(var i = 0; i < data["book_comment"].length; i++){
+                            let comment = datas[i];
+                            establish_dom(comment.name, comment.comment, comment.time);
+                        }
+
+                    }
+                }
+            )
+
+
+
+            function establish_dom(name, comment, time){
+                var xq_div1 = $("<div></div>").addClass("types_div");
+                $("#removepl").append(xq_div1);
+
+                var xq_div2 = $("<div></div>").addClass("comment_box1");
+                xq_div1.append(xq_div2);
+
+                {#var pl_div = $("<div></div>").addClass("comment_box1");#}
+                {#$("#removepl").append(pl_div);#}
+
+                var pl_table = $("<table></table>");
+                xq_div2.append(pl_table);
+
+                var pl_tr = $("<tr></tr>");
+                pl_table.append(pl_tr);
+
+                var pl_name = $("<td></td>").css({"width": "300px", "height": "80px"}).text("用户: " + name);
+                pl_tr.append(pl_name);
+
+                var pl_comment = $("<td></td>").css({"width": "860px", "height": "80px"}).text(comment);
+                pl_tr.append(pl_comment);
+
+                var pl_time = $("<td></td>").css({"width": "200px", "height": "80px"}).text(time);
+                pl_tr.append(pl_time);
+
+        }
+
+
+        }
+    </script>
+
+{% endblock %}

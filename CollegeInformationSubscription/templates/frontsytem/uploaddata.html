@@ -1,0 +1,112 @@
+{% extends "frontsytem/base.html" %}
+{% load static %}
+
+
+{% block body %}
+
+    <div class="layui-card" style="margin-top: 30px">
+        <div class="layui-card-header" style="font-size: 23px">上传资料</div>
+        <div class="layui-card-body">
+          <hr class="layui-bg-red">
+        </div>
+    </div>
+
+  <div class="layui-fluid" >
+    <div class="layui-card">
+      <div class="layui-card-body ">
+        <form class="layui-form layui-col-md12  layui-form-pane"  enctype="multipart/form-data" action="/APP2/uploaddata/" method="post">
+
+
+            <input type="text" name="dataname" placeholder="请输入书籍名称" autocomplete="off" class="layui-input" required>
+            <input type="text" name="dataauthor" placeholder="请输入书籍作者" autocomplete="off" class="layui-input" style="margin-top: 30px" required>
+
+
+            <input type="file" name="dataimgurl" autocomplete="off" class="layui-btn" style="margin-top: 30px" required>
+
+            <input type="text" name="qqnumber" placeholder="请输入个人QQ号" autocomplete="off" class="layui-input" style="margin-top: 30px" required>
+            <textarea name="dataintroduce" type="text" placeholder="请输入书籍简介" class="layui-textarea" style="margin-top: 30px" required></textarea>
+            <span>{{ err }}</span>
+            <div class="layui-form-item"  style="margin-top: 50px; margin-left: 38%">
+                  <div class="layui-input-block">
+                    <button class="layui-btn" lay-submit="" lay-filter="component-form-element">立即提交</button>
+                    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                  </div>
+            </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+
+<script>
+  layui.use(['element', 'upload'], function () {
+      var element = layui.element,
+      upload = layui.upload;
+
+      //普通图片上传
+      var uploadInst = upload.render({
+        elem: '#test-upload-normal'
+        ,url: '/upload/'
+        ,before: function(obj){
+          //预读本地文件示例，不支持ie8
+          obj.preview(function(index, file, result){
+            $('#test-upload-normal-img').attr('src', result); //图片链接（base64）
+          });
+        }
+        ,done: function(res){
+          //如果上传失败
+          if(res.code > 0){
+            return layer.msg('上传失败');
+          }
+          //上传成功
+        }
+        ,error: function(){
+          //演示失败状态，并实现重传
+          var demoText = $('#test-upload-demoText');
+          demoText.html('<span style="color: #FF5722;">上传失败</span> <a class="layui-btn layui-btn-mini demo-reload">重试</a>');
+          demoText.find('.demo-reload').on('click', function(){
+            uploadInst.upload();
+          });
+        }
+      });
+
+
+
+      //指定允许上传的文件类型
+      upload.render({
+        elem: '#test-upload-type1'
+        ,url: '/upload/'
+        ,accept: 'file' //普通文件
+        ,done: function(res){
+          console.log(res)
+        }
+      });
+
+
+
+      //设定文件大小限制
+      upload.render({
+        elem: '#test-upload-size'
+        ,url: '/upload/'
+        ,size: 60 //限制文件大小，单位 KB
+        ,done: function(res){
+          console.log(res)
+        }
+      });
+
+      //同时绑定多个元素，并将属性设定在元素上
+      upload.render({
+        elem: '.test-upload-demoMore'
+        ,before: function(){
+          layer.tips('接口地址：'+ this.url, this.item, {tips: 1});
+        }
+        ,done: function(res, index, upload){
+          var item = this.item;
+          console.log(item); //获取当前触发上传的元素，layui 2.1.0 新增
+        }
+      })
+
+  });
+</script>
+
+{% endblock %}

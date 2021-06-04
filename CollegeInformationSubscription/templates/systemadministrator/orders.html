@@ -1,0 +1,32 @@
+{% extends   "systemadministrator/bses.html" %}
+{% block wrapper %}
+    <div class="col-lg-10">
+        <hr>
+        <table class="table table-primary table-striped shadow-primary">
+            <thead>
+            <tr>
+                <th scope="col">订单编号</th>
+                <th scope="col">订单时间</th>
+                <th scope="col">总价</th>
+                <th scope="col">购买用户</th>
+                <th scope="col">图书名</th>
+                <th scope="col">学生班级</th>
+                <th scope="col">学生信息</th>
+            </thead>
+            <tbody>
+            {% for foo in orders %}
+                <tr>
+                    <th>{{ foo.ordernumber }}</th>
+                    <td>{{ foo.ordertime }}</td>
+                    <td>{{ foo.orderprice }}</td>
+                    <td><a  title="查看用户的订单号" style="color: yellow" href="{% url "Administrator:useror"%}?id={{ foo.orderregister.id}}&name={{ foo.orderregister.account }}">{{ foo.orderregister.name}}</a></td>
+                    <td><a   title="查看书籍的订单号" style="color: black" href="{% url "Administrator:bookor"%}?id={{ foo.orderbook.id }}&name={{foo.orderbook.bookname}}"> {{ foo.orderbook.bookname }}</a></td>
+                    <td > <a style="color: #0b2e13 " href="{% url "Administrator:bjdd" %}?class={{foo.orderstudent.classgrade }}">{{ foo.orderstudent.classgrade }}</a></td>
+                    <td ><a  title=" 查看此学生购买的书籍" style="color: red" href="{% url "Administrator:comment" %}?id={{ foo.orderstudent.id }}&name={{ foo.orderstudent.studentname }}">{{ foo.orderstudent.studentname }}</a></td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+{% endblock %}

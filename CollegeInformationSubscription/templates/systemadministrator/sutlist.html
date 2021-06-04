@@ -1,0 +1,132 @@
+{% extends "systemadministrator/bses.html" %}
+{% block wrapper %}
+    <div class="col-lg-10">
+        <hr>
+        <table class="table table-primary table-striped shadow-primary">
+            <thead>
+            <tr>
+                <th scope="col">学号</th>
+                <th scope="col">姓名</th>
+                <th scope="col">姓别</th>
+                <th scope="col">年级</th>
+                <th scope="col">班级</th>
+                <th scope="col">职位</th>
+                <th scope="col">学院</th>
+                <th scope="col">删除</th>
+                <th scope="col">编辑</th>
+            </thead>
+            <tbody>
+            {% for foo in pages %}
+                <tr>
+                    <th>{{ foo.studentnumber }}</th>
+                    <td>{{ foo.studentname }}</td>
+                    <td>{{ foo.studentgender }}</td>
+                    <td>{{ foo.studentschool.grade }}</td>
+                    <td>{{ foo.classgrade }}</td>
+                    <td>{% ifequal foo.stuentjurisdiction  1 %}
+                        管理员
+                    {% else %}
+                        普通学生
+                    {% endifequal %}
+                    </td>
+                    <td>{{ foo.studentschool.specialty }}</td>
+
+                    <td><a class="show-code dle" href="javascript:;"
+                           title="{% url "Administrator:delets"  id=foo.id %}"><i
+                            class="icon-trash icons"></i><span
+                            class="name">删除</span> <code class="code-preview" style="display: none;">.icon-trash</code></a>
+                    </td>
+                    <td>{% ifequal foo.stuentjurisdiction  1 %}
+                        <a class="show-code bj" id="bj" href="javascript:;"
+                           title="{% url "Administrator:upsut" id=foo.id %}"><i class="icon-pencil  icons"></i><span
+                                class="name">撤销管理员</span> <code class="code-preview"
+                                                                style="display: none;">.icon-pencil</code></a>
+
+                    {% else %}
+                        <a class="show-code bj" id="bj" href="javascript:;"
+                           title="{% url "Administrator:upsut" id=foo.id %}"><i class="icon-pencil icons"></i><span
+                                class="name">设置为管理员</span> <code class="code-preview" style="display: none;">.icon-pencil</code></a>
+                    {% endifequal %}
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+                       <div class="col-sm-12 col-md-7">
+                                    <div class="dataTables_paginate paging_simple_numbers"
+                                         id="default-datatable_paginate">
+                                        <ul class="pagination">
+
+
+                                            {% if pages.has_previous %}
+                                                <li class="paginate_button page-item previous "
+                                                    id="default-datatable_previous">
+                                                    <a href="{% url "Administrator:stulist"%}?id={{pages.previous_page_number}}" aria-controls="default-datatable"
+                                                       data-dt-idx="0" tabindex="0"
+                                                       class="page-link">Previous</a></li>
+
+
+                                            {% else %}
+                                                <li class="paginate_button page-item previous disabled"
+                                                    id="default-datatable_previous">
+                                                    <a href=""
+                                                       aria-controls="default-datatable"
+                                                       data-dt-idx="0" tabindex="0"
+                                                       class="page-link">Previous</a>
+                                                </li>
+                                            {% endif %}
+
+
+
+                                            {% for foo in pages.paginator.page_range %}
+                                                <li class="paginate_button page-item active"><a
+                                                        href="{% url "Administrator:stulist"%}?id={{foo}}"
+                                                        aria-controls="default-datatable"
+                                                        data-dt-idx="1"
+                                                        tabindex="0"
+                                                        class="page-link">{{ foo }}</a>
+                                                </li>
+                                            {% endfor %}
+
+                                            {% if pages.has_next %}
+                                                         <li class="paginate_button page-item next"
+                                                id="default-datatable_next"><a href="{% url "Administrator:stulist"%}?id={{pages.next_page_number}}"
+                                                                               aria-controls="default-datatable"
+                                                                               data-dt-idx="7" tabindex="0"
+                                                                               class="page-link">Next</a></li>
+                                             {% else %}
+                                                     <li class="paginate_button page-item next disabled"
+                                                id="default-datatable_next" ><a href="#"
+                                                                               aria-controls="default-datatable"
+                                                                               data-dt-idx="7" tabindex="0"
+                                                                               class="page-link">Next</a></li>
+                                            {% endif %}
+
+
+                                        </ul>
+                                    </div>
+                                </div>
+
+    </div>
+{% endblock %}
+{% block scs %}
+    var bj = document.getElementsByClassName("bj")
+    for (let i = 0; i < bj.length; i++) {
+    bj[i].onclick = function () {
+    s = this.attributes["title"].nodeValue
+    var xhr = new XMLHttpRequest()
+    xhr.open("get", s)
+    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset-UTF-8');
+    xhr.send()
+    xhr.onreadystatechange = function () {
+    console.log("进来了")
+    if (xhr.readyState === 4) {
+    if (xhr.status >= 200 && xhr.status < 300) {
+    alert(xhr.response)
+    window.location.reload()
+    }
+    }
+    }
+    }
+    }
+{% endblock %}

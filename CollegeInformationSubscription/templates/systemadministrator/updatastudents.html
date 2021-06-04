@@ -1,0 +1,40 @@
+{% extends "systemadministrator/base.html" %}
+{% block body %}
+    <body class="layui-body-content">
+    <div style="width: 100% ; text-align: center">
+        <div class="layui-fluid" style="width: 100% ; text-align: center">
+            <div class="layui-row layui-col-space15">
+                <div class="layui-col-md6">
+                    <div class="layui-card">
+                        <div class="layui-card-header">学生密码修改</div>
+                        <FORM method="post" action="{% url  "Administrator:studentsup" id=updata.id  %}">
+                            <div class="layui-card-body layui-row layui-col-space10">
+                                <div class="layui-col-md6">
+                                    <input type="text" name="user" placeholder="请输入8位数学号"  value="{{ updata.account }}" autocomplete="off"
+                                           class="layui-input">
+                                </div>
+                                <div class="layui-col-md6">
+                                    <input type="text" name="username" value="{{ updata.name }}" autocomplete="off"
+                                           class="layui-input">
+                                </div>
+                                <div class="layui-col-md6">
+                                    <input type="password" name="password"   placeholder="请输入修改的密码" autocomplete="off"
+                                           class="layui-input">
+                                </div>
+                                <div class="layui-col-md6">
+                                    <input type="password" name="passwords" placeholder="请确认修改密码" autocomplete="off"
+                                           class="layui-input">
+                                </div>
+                                    <input  type="hidden" value="{{updata.id}}" name="id">
+                            </div>
+                                {{ error }}
+                            <DIV>
+                                    <button class="layui-btn layui-btn-xs">提交</button>
+                            </DIV>
+                        </FORM>
+                    </div>
+                </div>
+            </div>
+    </body>
+    </div>
+{% endblock %}

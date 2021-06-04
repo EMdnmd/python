@@ -1,0 +1,57 @@
+{% extends "systemadministrator/bses.html" %}
+{% block wrapper %}
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-10">
+                <div class="card">
+                    <div class="card-body">
+                        <form id="personal-info"   method="post" enctype="multipart/form-data" >
+                            <h4 class="form-header text-uppercase">
+                                <i class="fa fa-user-circle-o"></i>
+                                添加书目
+                            </h4>
+                            <div class="form-group row">
+                                <label for="input-1" class="col-sm-2 col-form-label">书名</label>
+                                <div class="col-sm-4">
+                                    <input type="text" class="form-control" id="input-1" name="bookname" required>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="input-2" class="col-sm-2 col-form-label">图书价格</label>
+                                <div class="col-sm-4">
+                                    <input type="text" class="form-control" id="input-2" name="bookprice" required>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="input-3" class="col-sm-2 col-form-label">作者</label>
+                                <div class="col-sm-4">
+                                    <input type="text" class="form-control" id="input-3" name=" bookauthor" required>
+                                </div>
+                            </div>
+                                <div class="form-group row">
+                                    <label for="input-8" class="col-sm-2 col-form-label">图书图片</label>
+                                    <div class="col-sm-4">
+                                        <input type="file" class="form-control" id="input-8" name="bookimgurl" required>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="input-9" class="col-sm-2 col-form-label">图书简介</label>
+                                    <div class="col-sm-4">
+                                        <textarea class="form-control" rows="4" id="input-9" name="bookbrief"
+                                                  required=""></textarea>
+                                    </div>
+                                </div>
+                                    <SPAN>{{ er }}</SPAN>
+                                <div class="form-footer">
+                                    <button type="submit" class="btn btn-success"><i class="fa fa-check-square-o"></i>
+                                        编辑图书
+                                    </button>
+                                </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

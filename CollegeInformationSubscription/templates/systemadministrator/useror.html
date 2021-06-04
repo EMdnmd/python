@@ -1,0 +1,26 @@
+{% extends   "systemadministrator/bses.html" %}
+{% block wrapper %}
+    <div class="col-lg-10">
+
+        <hr>
+        <table class="table table-primary table-striped shadow-primary">
+            <thead>
+            <tr>
+                <th scope="col">订单号</th>
+                <th scope="col">购买时间</th>
+                <th scope="col">购买价格</th>
+                <th scope="col">购买账户</th>
+            </thead>
+            <tbody>
+            {% for foo in sa %}
+                <tr>
+                    <th>{{ foo.ordernumber }}</th>
+                    <td>{{ foo.ordertime }}</td>
+                    <td>{{ foo.orderprice}}</td>
+                    <td>{{ name }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

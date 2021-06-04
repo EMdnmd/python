@@ -1,0 +1,30 @@
+{% extends "systemadministrator/administratorLogin.html" %}
+{% block froms %}
+    <form method="post" class="layui-form" action="/userregister/">
+        <div class="login-wrap">
+            <div class="login-logo"></div>
+            <div class="login-form" style="padding: 20px 30px">
+                <div class="col">
+                    <input name="user" placeholder="请输入8位数学号" type="text" lay-verify="required" class="login-input">
+                    <label class="icon user" for="txtUserName"></label>
+                </div>
+                <div class="col">
+                    <input name="username" placeholder="请输入姓名" type="text" lay-verify="required" class="login-input">
+                    <label class="icon user" for="txtUserName"></label>
+                </div>
+                <div class="col">
+                    <input name="password" lay-verify="required" placeholder="请输入密码" type="password" class="login-input">
+                    <label class="icon pwd" for="txtPassword"></label>
+                </div>
+                  <div class="col">
+                    <input name="passwords" lay-verify="required" placeholder="请确认密码" type="password" class="login-input">
+                    <label class="icon pwd" for="txtPassword"></label>
+                </div>
+
+                <span style="color:red">{{ error }} </span>
+                <div class="col">
+                    <input type="submit" value="注册" lay-submit lay-filter="login" class="login-btn"/>
+                </div>
+            </div>
+        </div>
+{% endblock %}

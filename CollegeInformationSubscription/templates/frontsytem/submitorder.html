@@ -1,0 +1,200 @@
+{% extends "frontsytem/base.html" %}
+{% load static %}
+
+
+{% block body %}
+     <input type="hidden" value="{{ sm }}" id="sm">
+    <div class="layui-card" style="margin-top: 30px">
+
+        <div class="layui-card-header" style="font-size: 23px">个人信息添加</div>
+        <div class="layui-card-body">
+          <hr class="layui-bg-red">
+        </div>
+    </div>
+  <div class="layui-fluid" >
+    <div class="layui-card">
+      <div class="layui-card-body ">
+        <form class="layui-form layui-col-md12  layui-form-pane" method="post" action="/APP2/submitorder/">
+          <div class="layui-form-item x-city" id="start" style="margin-top: 10px; margin-left: 28%;">
+            <label class="layui-form-label">学校信息</label>
+            <div class="layui-input-inline" >
+              <select lay-filter="province" name="college">
+                <option value="">请选择学院</option>
+              </select>
+            </div>
+            <div class="layui-input-inline">
+              <select  lay-filter="city" name="specialty">
+                <option value="">请选专业</option>
+              </select>
+            </div>
+
+            <div class="layui-input-inline">
+              <select  lay-filter="area" name="grade">
+                <option value="">请选择入学年份</option>
+              </select>
+            </div>
+          </div>
+            <div class="form-group row"    style="margin-left: 40%">
+                <span style="font-size: 16px;margin-top: 6px" >性别:</span>
+                <div class="col-sm-4"  >
+
+                    <select name="studentgender"  required="" aria-invalid="false"  class="layui-input">
+                        <option value="男">男</option>
+                        <option value="女">女</option>
+                    </select>
+                    </div>
+            </div>
+            <input type="text" name="classgrade" placeholder="请输入自己所属班级全称" autocomplete="off" class="layui-input" style="margin-top: 30px">
+            <input type="number" minlength="8"  maxlength="8"   name="studentnumber"  placeholder="请输入学号" autocomplete="off" class="layui-input" style="margin-top: 30px">
+
+            <input type="text" name="studentname" placeholder="请输入姓名" autocomplete="off" class="layui-input" style="margin-top: 30px">
+                        {% if err %}
+                            <div style="margin-top: 20px">
+                                <span style="text-align: center;margin-left: 48%; font-size: 15px; color: #c20000">{{ err}}</span>
+                            </div>
+                        {% endif %}
+            <div class="layui-form-item"  style="margin-top: 30px; margin-left: 38%">
+                  <div class="layui-input-block">
+
+                    <input type="submit" class="layui-btn" lay-submit="" lay-filter="component-form-element" value="立即提交">
+                    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                  </div>
+            </div>
+        </form>
+      </div>
+
+  </div>
+  </div>
+
+{#  <script type="text/javascript" src={% static "/src/lib/admin/xcity.js" %}></script>#}
+  <script>
+
+            var provinceList = NaN
+            $.ajax(
+
+                {
+                    url: "/APP2/submitorder/?json=1",
+                    type: "GET",
+                    dataType: "json",
+                    success: function (data) {
+
+                        provinceList = data.name
+
+                    },error: function (e) {
+
+                            hg.msg("请求失败");
+
+                        }
+
+                }
+            )
+
+
+
+          $.fn.xcity = function(pName,cName,aName){
+
+            this.p = $(this).find('select[lay-filter=province]');
+
+            this.c = $(this).find('select[lay-filter=city]');
+
+            this.a = $(this).find('select[lay-filter=area]');
+
+            this.cityList = [];
+
+            this.reaList = [];
+
+            this.showP  = function(provinceList) {
+
+                this.p.html('');
+
+                is_pName = false;
+
+                for (var i in provinceList) {
+
+                    if(pName==provinceList[i].name){
+                        is_pName = true;
+                        this.cityList = provinceList[i].cityList;
+                        this.p.append("<option selected value='"+provinceList[i].name+"'>"+provinceList[i].name+"</option>")
+                    }else{
+                        this.p.append("<option value='"+provinceList[i].name+"'>"+provinceList[i].name+"</option>")
+                    }
+                }
+                if(!is_pName){
+                    this.cityList = provinceList[0].cityList;
+                }
+
+            }
+
+            this.showC = function (cityList) {
+
+                this.c.html('');
+
+                is_cName = false;
+
+                for (var i in cityList) {
+                    if(cName==cityList[i].name){
+                        is_cName = true;
+                        this.areaList = cityList[i].areaList;
+                        this.c.append("<option selected value='"+cityList[i].name+"'>"+cityList[i].name+"</option>")
+                    }else{
+                        this.c.append("<option value='"+cityList[i].name+"'>"+cityList[i].name+"</option>")
+                    }
+                }
+
+                if(!is_cName){
+                    this.areaList = cityList[0].areaList;
+                }
+            }
+
+            this.showA = function (areaList) {
+                this.a.html('');
+
+                for (var i in areaList) {
+
+                    if(aName==areaList[i]){
+                        this.a.append("<option selected value='"+areaList[i]+"'>"+areaList[i]+"</option>")
+                    }else{
+                        this.a.append("<option value='"+areaList[i]+"'>"+areaList[i]+"</option>")
+                    }
+                }
+            }
+
+            this.showP(provinceList);
+            this.showC(this.cityList);
+            this.showA(this.areaList);
+
+            form.render('select');
+
+            form.on('select(province)', function(data){
+                var pName = data.value;
+                $(data.elem).parents(".x-city").xcity(pName);
+            });
+
+            form.on('select(city)', function(data){
+                var cName = data.value;
+                var pName = $(data.elem).parents(".x-city").find('select[lay-filter=province]').val();
+                console.log(pName);
+                $(data.elem).parents(".x-city").xcity(pName,cName);
+            });
+
+            return this;
+        }
+
+
+
+
+      layui.use(['form', 'code'], function () {
+      form = layui.form;
+
+      layui.code();
+
+      $('#start').xcity();
+
+      {#$('#end').xcity('广东', '广州市', '东山区');#}
+
+    });
+
+
+  </script>
+
+{% endblock %}

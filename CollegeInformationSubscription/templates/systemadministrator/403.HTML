@@ -1,0 +1,29 @@
+{% extends "systemadministrator/bses.html" %}
+{% block bj %} class="gradient-ohhappiness"{% endblock %}
+{% block wrapper %}
+
+    <div id="wrapper">
+
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="text-center error-pages">
+                        <h1 class="error-title text-white"> 403</h1>
+                        <h2 class="error-sub-title text-white">权限</h2>
+                        <p class="error-message text-white text-uppercase">抱歉 你的权限不够</p>
+                        <div class="mt-4">
+                            <a href="/index/" class="btn btn-danger btn-round shadow-danger m-1">返回首页 </a>
+                        </div>
+                        <div class="mt-4">
+                            <p class="text-white">Copyright © 2018 Rukada | All rights reserved.</p>
+                        </div>
+                        <hr class="w-50">
+                        <div class="mt-2">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div><!--wrapper-->
+
+{% endblock %}

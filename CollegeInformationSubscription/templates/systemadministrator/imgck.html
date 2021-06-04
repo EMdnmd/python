@@ -1,0 +1,30 @@
+{% extends "systemadministrator/bses.html" %}
+{% load static %}
+{% block wrapper %}
+<div class="row">
+        <div class="col-lg-6">
+          <div id="accordion4">
+              <button type="button"  title="{% url "Administrator:saut" %}" class="btn btn-outline-dark btn-round waves-effect waves-light m-1" id="ak">返回</button>
+              <div class="card mb-2">
+                <div id="collapse-10" class="collapse show" data-parent="#accordion4">
+                  <div class="card-body">
+                    <img src="{% static  "book" %}/{{ data.dataimgurl }}" class="img-fluid rounded shadow mb-3" alt="card img">
+                    <div class="card-title text-uppercase text-secondary">资料简介</div>
+                        {{ data.dataintroduce }}
+                  </div>
+                </div>
+              </div>
+            </div>
+        </div>
+
+      </div>
+{% endblock %} }
+{% block scs %}
+               var buttons=document.getElementById("ak")
+                buttons.onclick=function () {
+                        s=buttons.attributes["title"].nodeValue
+                        window.location.href=s
+
+                }
+
+{% endblock %}

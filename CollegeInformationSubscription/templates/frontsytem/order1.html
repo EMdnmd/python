@@ -1,0 +1,98 @@
+{% extends "frontsytem/base.html" %}
+{% load static %}
+
+
+{% block body %}
+
+    <style>
+    .sp_cz_center{
+        vertical-align: middle;
+        text-align: center;
+    }
+
+    </style>
+
+    <div class="cart_list">
+
+    <div class="layui-card" >
+        <div class="layui-card-body">
+            <span style="float: left; font-size: 21px;">订单查询</span>
+            <span style="float: right; margin-bottom: 5px">
+                <button class="btn">
+                    <!-- 1.需完善a标签href属性 -->
+                    <a href="/APP2/order/?but=0" style="color: #ffffff;font-size: 18px">查询自己订单</a>
+                </button>
+                <button class="btn">
+                    <!-- 2.需完善a标签href属性 -->
+                    <a href="/APP2/order/?but=1" style="color: white;">查询班级订单</a>
+                </button>
+            </span>
+          <hr class="layui-bg-red">
+        </div>
+    </div>
+
+
+      <div class="col-lg-12">
+        <hr>
+
+        <table class="table table-primary table-striped shadow-primary" style="width:100%">
+            <thead  style="width:100%" class="sp_cz_center">
+            <tr>
+                <th  style="width:10%">学号</th>
+                <th  style="width:10%">姓名</th>
+                <th  style="width:10%">年级</th>
+                <th  style="width:10%">班级</th>
+                <th  style="width:10%">专业</th>
+                <th  style="width:10%">学院</th>
+                <th  style="width:10%">订单号</th>
+                <th  style="width:15%">订单时间</th>
+                <th  style="width:15%">图书名</th>
+            </thead>
+            <tbody>
+
+                <table class="table table-primary table-striped shadow-primary"   style="width:100%">
+                    {% for order in order_list %}
+{#                        {% if order.orderbook.objects.all.count == 1 %}#}
+                            <tr>
+                                <td style="width:10%; vertical-align: middle;" class="sp_cz_center">{{ order.orderstudent.studentnumber }}</td>
+                                <td style="width:10%; vertical-align: middle;" class="sp_cz_center">{{ order.orderstudent.studentname }}</td>
+                                <td style="width:10%; vertical-align: middle;" class="sp_cz_center">{{ order.orderstudent.studentschool.grade }}</td>
+                                <td style="width:10%; vertical-align: middle;" class="sp_cz_center">{{ order.orderstudent.classgrade }}</td>
+                                <td style="width:10%; vertical-align: middle;" class="sp_cz_center">{{ order.orderstudent.studentschool.specialty }}</td>
+                                <td style="width:10%; vertical-align: middle;" class="sp_cz_center">{{ order.orderstudent.studentschool.college}}</td>
+                                <td style="width:10%; vertical-align: middle;" class="sp_cz_center">{{ order.ordernumber }}</td>
+                                <td style="width:15%; vertical-align: middle;" class="sp_cz_center">{{ order.ordertime }}</td>
+                                <td style="width:15%; vertical-align: middle;" class="sp_cz_center">{{ order.orderbook.bookname }}</td>
+                            </tr>
+{#                        {% else %}#}
+                            <tr>
+                                <td style="width:10%; vertical-align: middle;" rowspan="3" class="sp_cz_center">56767</td>
+                                <td style="width:10%; vertical-align: middle;" rowspan="3" class="sp_cz_center">2341123</td>
+                                <td style="width:10%; vertical-align: middle;" rowspan="3" class="sp_cz_center">123121</td>
+                                <td style="width:10%; vertical-align: middle;" rowspan="3" class="sp_cz_center">123121</td>
+                                <td style="width:10%; vertical-align: middle;" rowspan="3" class="sp_cz_center">123121</td>
+                                <td style="width:10%; vertical-align: middle;" rowspan="3" class="sp_cz_center">123121</td>
+                                <td style="width:10%; vertical-align: middle;" rowspan="3" class="sp_cz_center">{{ order.ordernumber }}</td>
+                                <td style="width:15%; vertical-align: middle;" rowspan="3" class="sp_cz_center">{{ order.ordertime }}</td>
+                                <td style="width:15%; vertical-align: middle;" class="sp_cz_center">131231</td>
+                            </tr>
+
+{#                        {% endif %}#}
+
+                <tr>
+                    <td style="width:15%"  class="sp_cz_center">131231</td>
+                </tr>
+                <tr>
+                    <td style="width:15%"  class="sp_cz_center">131231</td>
+                </tr>
+
+                    {% endfor %}
+                </table>
+
+
+            </tbody>
+        </table>
+
+    </div>
+    </div>
+{% endblock %}

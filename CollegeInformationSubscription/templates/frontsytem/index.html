@@ -1,0 +1,264 @@
+{% extends "frontsytem/base.html" %}
+{% load static %}
+<style>
+        .layui-tree-main {
+            cursor: pointer;
+            padding-right: 10px;
+            float: left;
+            border-width: 1px;
+            border-style: solid;
+            border-color: #e6e6e6;
+            margin: 10px 0;
+        }
+    </style>
+{% block body %}
+
+
+    <div id="scrollobj" class="hotword2" style="white-space:nowrap;overflow:hidden;width:1456px; margin:1px; margin-top: 20px;" onmouseover="stop()" onmouseout="start()">
+
+
+        <span style="color: #b105c8; font-size: 23px;">{{ noticetime }}发布公告:</span>
+        <span style="color: #131515; font-size: 23px;">{{ noticestring }}</span>
+    </div>
+
+    <script>
+        function scroll(obj) {
+            var tmp = (obj.scrollLeft) ++;
+            //当滚动条到达右边顶端时
+            if (obj.scrollLeft == tmp) obj.innerHTML += obj.innerHTML;
+            //当滚动条滚动了初始内容的宽度时滚动条回到最左端
+            if (obj.scrollLeft >= obj.firstChild.offsetWidth) obj.scrollLeft = 0;
+        }
+        var a = setInterval("scroll(document.getElementById('scrollobj'))", 20);
+        function stop() {
+            clearInterval(a);
+        }
+
+        function start() {
+            a = setInterval("scroll(document.getElementById('scrollobj'))", 20);
+        }
+    </script>
+
+    <div class="layui-fluid" >
+        <div class="layui-card">
+
+            <div class="layui-card-body layui-tree">
+
+                <div >
+                    <table class="layui-hide" id="test" lay-filter="test"></table>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+    //树形列表初始化
+    layui.config({
+        base: '../lib/layui_ext/'
+    }).extend({
+        dtree: 'dtree/dtree'
+    }).use(['dtree'], function () {
+        var dtree = layui.dtree;
+        // 初始化树
+        var treeDept = dtree.render({
+            elem: "#deptTree",
+            width: "200",
+            height: "full-100",
+            dataFormat: "list", //list数据id-pid关联模式，不设置为children模式
+            method: "Get",
+            url: "/Depart/GetTreeList",
+            selectTips: "请选择末级部门",
+            initLevel: 3, //默认展开层次
+            load: false, //加载数据时是否显示遮罩
+            menubar: true, //下拉框中开启菜单栏
+            checkbar: false,
+            response: {
+                treeId: "id", //绑定数据中ID字段名
+                parentId: "gradeId", //绑定数据中父ID字段名
+                title: "departName", //绑定数据中显示字段名
+            },
+            data: [{
+                "id": 1,
+                "departName": "2020\u7EA7",
+                "gradeId": 0
+            }, {
+                "id": 2,
+                "departName": ".net core \u57FA\u7840\u73ED",
+                "gradeId": 1
+            }, {
+                "id": 3,
+                "departName": ".net core \u7CBE\u82F1\u73ED",
+                "gradeId": 1
+            }, {
+                "id": 4,
+                "departName": "java EE \u57FA\u7840\u73ED",
+                "gradeId": 1
+            }]
+        });
+        dtree.on("node('deptTree')", function (obj) {
+            var aa = $('button[lay-filter="querysubmit"]');
+            if (obj.param.leaf) {
+                $("#dept").val(obj.param.nodeId);
+                aa.click();
+            } else {
+                $("#dept").val(obj.param.nodeId);
+                aa.click();
+            }
+        });
+    });
+
+    //监听表单提交事件
+    hg.form.onsubmit('querysubmit', function (data) {
+        hg.msghide("重新加载数据..");
+        table && table.reload(data);
+    });
+    var tableCols = [
+        [{
+                type: 'checkbox'
+            },
+            {#{#}
+            {#    field: 'id',#}
+            {#    width: 80,#}
+            {#    title: '编号',#}
+            {#    sort: true#}
+            {#    },#}
+            {
+                   field: 'bookimg',
+                   title: '书籍图片',
+                   width: 200,
+                   align: 'center',
+                   templet: function (d) {
+
+                       return '<img src={% static "book/" %}'+d.bookimg + '/>';
+                   }
+            }, {
+                field: 'bookname',
+                width: 150,
+                title: '书籍名称',
+                sort: true
+            },
+
+            {
+                field: 'bookauthor',
+                title: '书籍作者',
+                width: 150,
+                sort: true,
+
+            }, {
+                field: 'bookintroduction',
+                title: '书籍简介',
+                minWidth: 200,
+                sort: true
+            }, {
+                field: 'bookprice',
+                title: '书籍价格',
+                width: 100,
+                sort: true
+            }, {
+                field: 'right',
+                width: 130,
+                title: '书籍操作',
+                fixed: 'right',
+                templet: function (d) {
+
+                    return '<a class="layui-btn layui-btn-xs" lay-event="details" href="/APP2/details/?id='+d.right+'"'+'>详情</a>'+'<a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="edit" href="/APP2/addcomment/?id='+d.right+'"'+'>评论</a>'
+                }
+            }
+        ]
+    ];
+    var toolbar = [{
+        text: '提交订单',
+        layuiicon: '&#xe642;',
+        class: 'layui-btn-danger',
+        handler: function (obj, row) {
+            if (obj.checkstatus && obj.checkstatus.data.length > 0) {
+                //console.log(obj.checkstatus.data)
+                //alert(obj.checkstatus.data)
+                hg.confirm("你确定要购买所选的书籍吗？", function () {
+
+                    {#alert(obj.checkstatus.data.map(function (x) { return x.id }).join(','));#}
+                   $.ajax(
+                    {
+                        url: "/APP2/savebookid/",
+                        type: "POST",
+                        dataType: "json",
+                        data: {
+                            'bookid_str':obj.checkstatus.data.map(function (x) { return x.id }).join(',')
+                        },
+                        success: function (data) {
+
+                        }
+                    }
+                )
+
+                    {#console.log(obj.checkstatus.data.map(function (x) { return x.id }).join(','))#}
+                    $.ajax({
+                        url: '/APP2/submitorder/',
+                        data: {
+                            arr: obj.checkstatus.data.map(function (x) {
+                                return x.id
+                            })
+                        },
+                        type: 'GET',
+                        success: function (data) {
+                            window.location.href="/APP2/submitorder/"
+                            if (data.success) {
+                                {#hg.msg('提交成功！');#}
+                                {#window.location.href="http://127.0.0.1:8000/APP2/submitorder/"#}
+                                //重载表格数据
+                                //hg.table.datatable('test', 'reload');
+                                table && table.reload();
+                            } else {
+                                hg.msg(data.msg);
+                            }
+                        },
+                        error: function (e) {
+
+                            hg.msg("网络请求失败！"+e);
+
+                        }
+                    });
+
+                });
+            } else {
+                hg.msg('请选中一个或多个复选框，再操作！');
+            }
+        }
+    },
+
+    ];
+        data_ = []
+       $.ajax(
+                {
+                    url: "/APP2/index/",
+                    type: "POST",
+                    dataType: "json",
+                    success: function (data) {
+
+                        {#alert(data.name)#}
+                        for(var i = 0; i < data.name.length; i++){
+                            {#alert(data.name[i].id);#}
+                            var dict_ = {
+                                'id': data.name[i].id,
+                                'bookimg': data.name[i].bookimg,
+                                'bookname': data.name[i].bookname,
+                                'bookauthor': data.name[i].bookauthor,
+                                'bookintroduction': data.name[i].bookintroduction,
+                                'bookprice': data.name[i].bookprice,
+                                'right': data.name[i].right,
+                            }
+                            data_.push(dict_)
+                        }
+
+                    }
+                }
+            )
+
+    //基本数据表格
+    var table = hg.table.datatable('test', '用户管理', data_, {}, tableCols, toolbar, true, 'full-100', ['filter','print', 'exports']);
+</script>
+
+
+{% endblock %}

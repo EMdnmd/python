@@ -1,0 +1,56 @@
+{% extends "systemadministrator/base.html" %}
+{% block body %}
+    <body>
+              <div class="layui-col-md12">
+          <div class="layui-card">
+            <div class="layui-card-header">添加书本大图片</div>
+            <div class="layui-card-body">
+              <div class="layui-upload">
+                <button type="button" class="layui-btn" id="test-upload-normal">上传图片</button>
+                <div class="layui-upload-list">
+                  <img class="layui-upload-img" id="test-upload-normal-img">
+                  <p id="test-upload-demoText"></p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+    </body>
+{% endblock %}
+{% block script %}
+{#        <script src="{% static '/src/lib/layui/layui.js' %}"></script>#}
+        <script>
+  layui.use(['element', 'upload'], function () {
+      var element = layui.element,
+      upload = layui.upload;
+      //普通图片上传
+      var uploadInst = upload.render({
+        elem: '#test-upload-normal'
+        ,url: 'http://127.0.0.1:8000{%url "Administrator:bookbig"%}?id={{ s1 }}'
+        ,before: function(obj){
+          obj.preview(function(index, file, result){
+            $('#test-upload-normal-img').attr('src', result); //图片链接（base64）
+          });
+        }
+        ,done: function(res){
+          //如果上传失败
+          if(res.code > 0){
+            return layer.msg('上传失败');
+          }else {
+              return layer.msg('上传成功');
+          }
+          //上传成功
+        }
+        ,error: function(){
+          //演示失败状态，并实现重传
+          var demoText = $('#test-upload-demoText');
+          demoText.html('<span style="color: #FF5722;">上传失败</span> <a class="layui-btn layui-btn-mini demo-reload">重试</a>');
+          demoText.find('.demo-reload').on('click', function(){
+            uploadInst.upload();
+          });
+        }
+      });
+  });
+</script>
+{% endblock %}

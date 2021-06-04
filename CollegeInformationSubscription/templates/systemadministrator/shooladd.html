@@ -1,0 +1,90 @@
+{% extends "systemadministrator/base.html" %}
+{% block title %}添加学校{% endblock %}
+{% block body %}
+    <body>
+    <div class="layui-fluid" style="width: 100%;margin: 0 auto">
+        <div class="layui-card">
+            <div class="layui-card-header">添加学校</div>
+            <div class="layui-card-body" style="padding: 15px;">
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">学院创建时间</label>
+                        <div class="layui-input-inline">
+                            <input id="rq" title="时间" type="date" name="year" autocomplete="off"
+                                   class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <label class="layui-form-label">学校</label>
+                        <div class="layui-input-inline">
+                            <input id="xx" type="text" title="学校" name="college" autocomplete="off"
+                                   class="layui-input">
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">学院</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="specialty" title="学院" id="xy" autocomplete="off"
+                               class="layui-input">
+                    </div>
+                </div>
+                   &nbsp&nbsp &nbsp &nbsp &nbsp&nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp
+                    &nbsp &nbsp &nbsp &nbsp
+                <button class="layui-btn" lay-submit="" id="button" lay-filter="component-form-demo1">立即提交
+                </button>
+
+            </div>
+        </div>
+
+
+    </div>
+    </div>
+    </body>
+{% endblock %}
+{% block script %}
+    <script>
+        $(function () {
+            $("#button").click(function () {
+                $index = $('input')
+                datas = {}
+                $index.each(function (i) {
+                    val = $index[i].value
+
+                    datas[$($index[i]).attr("name")] = val
+                })
+                if (datas["year"] !== "") {
+                    if (datas["college"] !== "") {
+                        if (datas["specialty"] !== "") {
+                            $.ajax({
+                                url: "{% url "Administrator:shooladd" %}",
+                                data: datas,
+                                type: "POST",
+                                datatype: "json",
+                                success: function (data) {
+                                    console.log("进来了")
+                                    resq = $.parseJSON(data)["resq"]
+                                    alert(resq)
+                                    window.location.reload()
+                                },
+                                timeout: 4000,
+                                error: function (data) {
+                                    console.log("出错了")
+                                }
+                            })
+                        } else {
+                            alert("学院不能为空")
+                        }
+                    } else {
+                        alert("学校不能为空")
+                    }
+                } else {
+                    alert("时间不能为空")
+                }
+
+
+            })
+
+        })
+    </script>
+{% endblock %}

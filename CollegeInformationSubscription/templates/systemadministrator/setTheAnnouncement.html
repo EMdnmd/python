@@ -1,0 +1,56 @@
+{% extends  "systemadministrator/base.html" %}
+{% block title %}设置公告{% endblock %}
+{% block body %}
+
+
+    <body>
+    <div class="layui-col-md6">
+        <div class="layui-card">
+            <div class="layui-card-body layui-row layui-col-space10">
+                <div class="layui-col-md12">
+                    <textarea  id="textact" name="" placeholder="请输入" maxlength="50" class="layui-textarea" required> </textarea>
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn" id="button" lay-submit="" lay-filter="component-form-element">立即提交</button>
+            </div>
+        </div>
+    </div>
+    </body>
+{% endblock %}
+{% block script %}
+    <script>
+    $(function () {
+
+           $("#button").click(function () {
+                    text=$("#textact").val()
+                    console.log(text)
+                    if (text!==" "&&text.length<=50){
+                             $.ajax({
+                            url:"{% url "Administrator:act" %}",
+                            data:{noticestring:text},
+                            type:"POST",
+                            datatype:"json",
+                            success:function (data) {
+                                    console.log("进来了")
+                                    resq=$.parseJSON(data)["resq"]
+                                    alert(resq)
+                                    window.location.reload()
+                            },
+                            timeout:4000,
+                            error:function (data) {
+                                    console.log("出错了")
+                            }
+
+                    })
+                    }else {
+                        alert("请输入公告(50字)")
+                    }
+
+
+           })
+    })
+    </script>
+{% endblock %}

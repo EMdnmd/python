@@ -1,0 +1,105 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="hg-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <script src="{% static '/src/buyer/jq/jquery.min.js' %}"></script>
+
+    <link rel="icon" href="{% static '/assets/images/favicon.ico' %}" type="image/x-icon">
+    <!-- simplebar CSS-->
+    <link href={% static  "/assets/plugins/simplebar/css/simplebar.css" %} rel="stylesheet"/>
+    <!-- Bootstrap core CSS-->
+    <link href={% static '/assets/css/bootstrap.min.css' %} rel="stylesheet"/>
+    <!-- animate CSS-->
+    <link href={% static "/assets/css/animate.css" %} rel="stylesheet" type="text/css"/>
+    <!-- Icons CSS-->
+    <link href={% static "/assets/css/icons.css" %} rel="stylesheet" type="text/css"/>
+    <!-- Sidebar CSS-->
+    <link href="{% static "/assets/css/sidebar-menu.css" %}" rel="stylesheet"/>
+    <!-- Custom Style-->
+    <link href={% static "/assets/css/app-style.css" %} rel="stylesheet"/>
+
+    <!-- Bootstrap core JavaScript-->
+    <script src={% static '/assets/js/jquery.min.js' %}></script>
+    <script src={% static '/assets/js/popper.min.js' %}></script>
+    <script src={% static "/assets/js/bootstrap.min.js" %}></script>
+    <!-- simplebar js -->
+    <script src={% static "/assets/plugins/simplebar/js/simplebar.js" %}></script>
+    <!-- waves effect js -->
+    <script src={% static "/assets/js/waves.js" %}></script>
+    <link rel='stylesheet' href={% static '/src/lib/nprogress/nprogress.css' %}/>
+    <link type="text/css" href="{% static '/src/buyer/css/index.css' %}" rel="stylesheet"/>
+    <link rel="stylesheet" href={% static "/src/css/font-awesome.min.css" %}>
+    <link rel="stylesheet" href={% static "/src/lib/layui/css/layui.css" %} media="all">
+    <link rel="stylesheet" href={% static "/src/lib/admin/admin.css" %} media="all">
+    <link rel="stylesheet" href={% static "/src/lib/Scrollbar/jquery.scrollbar.css" %}>
+    <link rel="stylesheet" href={% static "/src/lib/layui_ext/dtree/dtree.css" %} />
+    <link rel="stylesheet" href={% static "/src/lib/layui_ext/dtree/font/dtreefont.css" %} />
+    <script type="text/javascript" src={% static "/src/lib/admin/jquery-1.9.1.min.js" %}></script>
+    <script type="text/javascript" src={% static "/src/lib/Scrollbar/jquery.scrollBar.js" %}></script>
+    <script type="text/javascript" src={% static "/src/lib/layui/layui.js" %}></script>
+    <script type="text/javascript" src={% static "/src/lib/admin/admin.js" %}></script>
+    <!-- 让IE8/9支持媒体查询，从而兼容栅格 -->
+    <!--[if lt IE 9]>
+          <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
+          <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+
+</head>
+
+<body class="layui-body-content" style="border: 1px solid #324324">
+    <div class="layui-fluid">
+      <div class="layui-row layui-col-space15">
+        <div class="layui-col-md12">
+          <div class="layui-card">
+            <div class="layui-card-body">
+
+                
+              <ul class="layui-nav style=" text-align:="" right;"=""> &lt;-- 小Tips：这里有没有发现，设置导航靠右对齐（或居中对齐）其实非常简单 --&gt;
+                <li class="layui-nav-item">
+                  <a href="https://ww.baidu.com" style="font-size: 27px; color: #07bba7">高校资料订购系统</a>
+                </li>
+
+                <li class="layui-nav-item" style="float: right">
+                  <a href="/APP2/changepassword" style="font-size: 16px; color: #ebe7ec;">修改密码</a>
+                </li>
+
+                <li class="layui-nav-item" style="float: right">
+                  <a href="\tc\" style="font-size: 16px; color: #f0e8e8;">退出</a>
+                </li>
+
+                <li class="layui-nav-item" style="float: right">
+                  <a href="#" style="font-size: 18px; color: #b105c8;">欢迎 {{ request.session.name }} 学生</a>
+                </li>
+
+              </ul>
+              <br>
+                
+              <div class="layui-tab layui-tab-brief">
+                <ul class="layui-tab-title">
+                    <li class="layui-this"><a href="/APP2/index">主页</a></li>
+                    <li class="layui-this"><a href="/APP2/order">订单</a></li>
+                    <li class="layui-this"><a href="/APP2/uploaddata">上传资料</a></li>
+                </ul>
+                <div class="layui-tab-content"></div>
+              </div>
+                {% block body %}
+
+                {% endblock %}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+</body>
+
+
+</html>
